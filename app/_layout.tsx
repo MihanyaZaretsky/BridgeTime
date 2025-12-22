@@ -47,16 +47,29 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? BridgeTimeDarkTheme : BridgeTimeLightTheme;
 
+  const iconFonts = Platform.OS === 'web' ? {} : { ...Ionicons.font, ...MaterialIcons.font };
+
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_600SemiBold,
     Nunito_700Bold,
-    ...Ionicons.font,
-    ...MaterialIcons.font,
+    ...iconFonts,
   });
 
   useEffect(() => {
     if (Platform.OS === 'web') {
+      if (typeof document !== 'undefined') {
+        const id = 'material-symbols-stylesheet';
+        const existing = document.getElementById(id);
+        if (!existing) {
+          const link = document.createElement('link');
+          link.id = id;
+          link.rel = 'stylesheet';
+          link.href =
+            'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0';
+          document.head.appendChild(link);
+        }
+      }
       return;
     }
 
@@ -73,7 +86,7 @@ export default function RootLayout() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && Platform.OS !== 'web') {
     return null;
   }
 

@@ -1,8 +1,8 @@
+import { AppIcon } from '@/components/ui/app-icon';
 import { BlurView } from '@/components/ui/blur-view';
 import { LinearGradient } from '@/components/ui/linear-gradient';
 import { SharedColors } from '@/constants/theme';
 import { useGame } from '@/context/GameContext';
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
 import {
@@ -142,7 +142,7 @@ export default function GameScreen() {
       <View style={[styles.content, { paddingTop: insets.top + 10, paddingBottom: insets.bottom + 18 }]}>
         <View style={styles.topBar}>
           <Pressable onPress={handleQuit} style={styles.closeButton}>
-            <Ionicons name="close" size={18} color={era.text} />
+            <AppIcon name="close" size={18} color={era.text} />
           </Pressable>
         </View>
 
@@ -157,7 +157,7 @@ export default function GameScreen() {
           >
             <View style={styles.cardCenter}>
               <View style={styles.eraIconCenter} pointerEvents="none">
-                <Ionicons
+                <AppIcon
                   name={isCurrentTurnPast ? 'hourglass-outline' : 'sparkles-outline'}
                   size={132}
                   color={isCurrentTurnPast ? 'rgba(139, 94, 60, 0.22)' : 'rgba(59, 130, 246, 0.20)'}
@@ -203,7 +203,7 @@ export default function GameScreen() {
           ]}
           onPress={handleScanCard}
         >
-          <Ionicons name="camera-outline" size={22} color="#FFFFFF" />
+          <AppIcon name="camera-outline" size={22} color="#FFFFFF" />
           <Text style={styles.scanButtonText}>Отсканировать QR-код</Text>
         </Pressable>
       </View>

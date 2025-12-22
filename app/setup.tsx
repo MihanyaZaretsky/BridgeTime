@@ -3,9 +3,9 @@
  * Players select their roles (Past/Present) and enter names
  */
 
+import { AppIcon } from '@/components/ui/app-icon';
 import { PastColors, SharedColors } from '@/constants/theme';
 import { useGame } from '@/context/GameContext';
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -58,7 +58,7 @@ export default function SetupScreen() {
         {/* Header */}
         <Animated.View entering={FadeInDown.delay(100).duration(600)} style={styles.header}>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={22} color={styles.iconColor.color} />
+            <AppIcon name="chevron-back" size={22} color={styles.iconColor.color} />
           </Pressable>
           <Text style={styles.title}>Кто играет?</Text>
           <Text style={styles.subtitle}>
@@ -73,7 +73,7 @@ export default function SetupScreen() {
         >
           <View style={styles.cardHeader}>
             <View style={styles.roleIconContainer}>
-              <Ionicons name="chatbubble-outline" size={22} color={styles.iconColor.color} />
+              <AppIcon name="chatbubble-outline" size={22} color={styles.iconColor.color} />
             </View>
             <View style={styles.roleInfo}>
               <Text style={styles.roleName}>Игрок 1 — Прошлое</Text>
@@ -103,7 +103,7 @@ export default function SetupScreen() {
         <Animated.View entering={FadeInDown.delay(300).duration(600)} style={styles.connectionLine}>
           <View style={styles.connectionDot} />
           <View style={styles.connectionBridge}>
-            <Ionicons name="swap-horizontal-outline" size={18} color={styles.iconColor.color} />
+            <AppIcon name="swap-horizontal-outline" size={18} color={styles.iconColor.color} />
           </View>
           <View style={styles.connectionDot} />
         </Animated.View>
@@ -115,7 +115,7 @@ export default function SetupScreen() {
         >
           <View style={styles.cardHeader}>
             <View style={styles.roleIconContainer}>
-              <Ionicons name="chatbubble-outline" size={22} color={styles.iconColor.color} />
+              <AppIcon name="chatbubble-outline" size={22} color={styles.iconColor.color} />
             </View>
             <View style={styles.roleInfo}>
               <Text style={styles.roleName}>Игрок 2 — Настоящее</Text>
