@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Print Sheet (25)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #111;
+    }
+
+    .sheet {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6mm;
+      padding: 10mm;
+    }
+
+    .cell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 3mm;
+      border: 1px solid #bdbdbd;
+    }
+
+    .cell::before,
+    .cell::after {
+      content: "";
+      position: absolute;
+      inset: -2mm;
+      pointer-events: none;
+      background:
+        linear-gradient(#000, #000) left top / 8mm 0.3mm no-repeat,
+        linear-gradient(#000, #000) left top / 0.3mm 8mm no-repeat,
+        linear-gradient(#000, #000) right top / 8mm 0.3mm no-repeat,
+        linear-gradient(#000, #000) right top / 0.3mm 8mm no-repeat,
+        linear-gradient(#000, #000) left bottom / 8mm 0.3mm no-repeat,
+        linear-gradient(#000, #000) left bottom / 0.3mm 8mm no-repeat,
+        linear-gradient(#000, #000) right bottom / 8mm 0.3mm no-repeat,
+        linear-gradient(#000, #000) right bottom / 0.3mm 8mm no-repeat;
+      opacity: 0.35;
+    }
+
+    .qr-wrap {
+      padding: 3mm;
+      background: #fff;
+    }
+
+    .qr {
+      width: 35mm;
+      height: 35mm;
+      image-rendering: pixelated;
+      display: block;
+    }
+
+    .label {
+      margin-top: 2mm;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .title {
+      margin-top: 1mm;
+      font-size: 9px;
+      text-align: center;
+      line-height: 1.2;
+      min-height: 20px;
+    }
+
+    @media screen {
+      body { background: #f3f3f3; }
+      .sheet { max-width: 900px; margin: 0 auto; background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_001.png" alt="card_001" />
+        </div>
+        <div class="label">Card #001 - Text</div>
+        <div class="title">JavaScript Basics: Variables</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_002.png" alt="card_002" />
+        </div>
+        <div class="label">Card #002 - Text</div>
+        <div class="title">Algebra: Solving Linear Equations</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_003.png" alt="card_003" />
+        </div>
+        <div class="label">Card #003 - Text</div>
+        <div class="title">Physics: Newton&#39;s Second Law</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_004.png" alt="card_004" />
+        </div>
+        <div class="label">Card #004 - Text</div>
+        <div class="title">Ancient History: Roman Republic</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_005.png" alt="card_005" />
+        </div>
+        <div class="label">Card #005 - Text</div>
+        <div class="title">React: Components</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_006.png" alt="card_006" />
+        </div>
+        <div class="label">Card #006 - Video</div>
+        <div class="title">Introduction to JavaScript</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_007.png" alt="card_007" />
+        </div>
+        <div class="label">Card #007 - Video</div>
+        <div class="title">React State vs Props</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_008.png" alt="card_008" />
+        </div>
+        <div class="label">Card #008 - Video</div>
+        <div class="title">Expo: Offline Assets</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_009.png" alt="card_009" />
+        </div>
+        <div class="label">Card #009 - Video</div>
+        <div class="title">Biology: Cells Overview</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_010.png" alt="card_010" />
+        </div>
+        <div class="label">Card #010 - Video</div>
+        <div class="title">World History: Industrial Revolution</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_011.png" alt="card_011" />
+        </div>
+        <div class="label">Card #011 - Audio</div>
+        <div class="title">Chemistry: States of Matter</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_012.png" alt="card_012" />
+        </div>
+        <div class="label">Card #012 - Audio</div>
+        <div class="title">Geometry: Triangle Types</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_013.png" alt="card_013" />
+        </div>
+        <div class="label">Card #013 - Audio</div>
+        <div class="title">Ancient Egypt: Pyramids</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_014.png" alt="card_014" />
+        </div>
+        <div class="label">Card #014 - Audio</div>
+        <div class="title">JavaScript: Async/Await</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_015.png" alt="card_015" />
+        </div>
+        <div class="label">Card #015 - Audio</div>
+        <div class="title">Astronomy: The Solar System</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_016.png" alt="card_016" />
+        </div>
+        <div class="label">Card #016 - Image</div>
+        <div class="title">Graph: Slope Interpretation</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_017.png" alt="card_017" />
+        </div>
+        <div class="label">Card #017 - Image</div>
+        <div class="title">Anatomy: Human Heart</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_018.png" alt="card_018" />
+        </div>
+        <div class="label">Card #018 - Image</div>
+        <div class="title">Timeline: World War II</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_019.png" alt="card_019" />
+        </div>
+        <div class="label">Card #019 - Image</div>
+        <div class="title">React Native: Flexbox</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_020.png" alt="card_020" />
+        </div>
+        <div class="label">Card #020 - Image</div>
+        <div class="title">Chemistry: Periodic Table</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_021.png" alt="card_021" />
+        </div>
+        <div class="label">Card #021 - Mixed</div>
+        <div class="title">Expo + Assets: Local Media</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_022.png" alt="card_022" />
+        </div>
+        <div class="label">Card #022 - Mixed</div>
+        <div class="title">Math: Fractions + Visual</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_023.png" alt="card_023" />
+        </div>
+        <div class="label">Card #023 - Mixed</div>
+        <div class="title">Science: Water Cycle</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_024.png" alt="card_024" />
+        </div>
+        <div class="label">Card #024 - Mixed</div>
+        <div class="title">History: Ancient Greece</div>
+      </div>
+    
+
+      <div class="cell">
+        <div class="qr-wrap">
+          <img class="qr" src="./qrcodes/card_025.png" alt="card_025" />
+        </div>
+        <div class="label">Card #025 - Mixed</div>
+        <div class="title">React: Hooks + Example</div>
+      </div>
+    
+  </div>
+</body>
+</html>

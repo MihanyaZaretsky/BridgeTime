@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Preview (Offline)</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #111;
+      background: #0b1220;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      padding: 16px;
+      min-height: 100vh;
+    }
+
+    .panel {
+      background: #121a2b;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      outline: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: left;
+      color: inherit;
+    }
+
+    .card:focus {
+      outline: 2px solid rgba(64, 140, 255, 0.8);
+      outline-offset: 2px;
+    }
+
+    .qr {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px;
+      object-fit: contain;
+    }
+
+    .label {
+      color: rgba(255,255,255,0.75);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .title {
+      color: rgba(255,255,255,0.95);
+      font-size: 12px;
+      line-height: 1.2;
+      min-height: 28px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #eaf2ff;
+      overflow: auto;
+      max-height: calc(100vh - 120px);
+      font-size: 12px;
+    }
+
+    .details h2 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .hint {
+      margin: 0 0 10px 0;
+      color: rgba(255,255,255,0.75);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1100px) {
+      .wrap { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(3, 1fr); }
+      pre { max-height: 45vh; }
+    }
+
+    @media (max-width: 650px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="topbar">
+        <input id="search" placeholder="Search by id/title/type/subject (e.g. card_007, react, math)" />
+      </div>
+      <div id="grid" class="grid">
+        
+      <button class="card" data-id="card_001" type="button">
+        <img class="qr" src="./qrcodes/card_001.png" alt="card_001" />
+        <div class="meta">
+          <div class="label">#001 Text</div>
+          <div class="title">JavaScript Basics: Variables</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_002" type="button">
+        <img class="qr" src="./qrcodes/card_002.png" alt="card_002" />
+        <div class="meta">
+          <div class="label">#002 Text</div>
+          <div class="title">Algebra: Solving Linear Equations</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_003" type="button">
+        <img class="qr" src="./qrcodes/card_003.png" alt="card_003" />
+        <div class="meta">
+          <div class="label">#003 Text</div>
+          <div class="title">Physics: Newton&#39;s Second Law</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_004" type="button">
+        <img class="qr" src="./qrcodes/card_004.png" alt="card_004" />
+        <div class="meta">
+          <div class="label">#004 Text</div>
+          <div class="title">Ancient History: Roman Republic</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_005" type="button">
+        <img class="qr" src="./qrcodes/card_005.png" alt="card_005" />
+        <div class="meta">
+          <div class="label">#005 Text</div>
+          <div class="title">React: Components</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_006" type="button">
+        <img class="qr" src="./qrcodes/card_006.png" alt="card_006" />
+        <div class="meta">
+          <div class="label">#006 Video</div>
+          <div class="title">Introduction to JavaScript</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_007" type="button">
+        <img class="qr" src="./qrcodes/card_007.png" alt="card_007" />
+        <div class="meta">
+          <div class="label">#007 Video</div>
+          <div class="title">React State vs Props</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_008" type="button">
+        <img class="qr" src="./qrcodes/card_008.png" alt="card_008" />
+        <div class="meta">
+          <div class="label">#008 Video</div>
+          <div class="title">Expo: Offline Assets</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_009" type="button">
+        <img class="qr" src="./qrcodes/card_009.png" alt="card_009" />
+        <div class="meta">
+          <div class="label">#009 Video</div>
+          <div class="title">Biology: Cells Overview</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_010" type="button">
+        <img class="qr" src="./qrcodes/card_010.png" alt="card_010" />
+        <div class="meta">
+          <div class="label">#010 Video</div>
+          <div class="title">World History: Industrial Revolution</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_011" type="button">
+        <img class="qr" src="./qrcodes/card_011.png" alt="card_011" />
+        <div class="meta">
+          <div class="label">#011 Audio</div>
+          <div class="title">Chemistry: States of Matter</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_012" type="button">
+        <img class="qr" src="./qrcodes/card_012.png" alt="card_012" />
+        <div class="meta">
+          <div class="label">#012 Audio</div>
+          <div class="title">Geometry: Triangle Types</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_013" type="button">
+        <img class="qr" src="./qrcodes/card_013.png" alt="card_013" />
+        <div class="meta">
+          <div class="label">#013 Audio</div>
+          <div class="title">Ancient Egypt: Pyramids</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_014" type="button">
+        <img class="qr" src="./qrcodes/card_014.png" alt="card_014" />
+        <div class="meta">
+          <div class="label">#014 Audio</div>
+          <div class="title">JavaScript: Async/Await</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_015" type="button">
+        <img class="qr" src="./qrcodes/card_015.png" alt="card_015" />
+        <div class="meta">
+          <div class="label">#015 Audio</div>
+          <div class="title">Astronomy: The Solar System</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_016" type="button">
+        <img class="qr" src="./qrcodes/card_016.png" alt="card_016" />
+        <div class="meta">
+          <div class="label">#016 Image</div>
+          <div class="title">Graph: Slope Interpretation</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_017" type="button">
+        <img class="qr" src="./qrcodes/card_017.png" alt="card_017" />
+        <div class="meta">
+          <div class="label">#017 Image</div>
+          <div class="title">Anatomy: Human Heart</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_018" type="button">
+        <img class="qr" src="./qrcodes/card_018.png" alt="card_018" />
+        <div class="meta">
+          <div class="label">#018 Image</div>
+          <div class="title">Timeline: World War II</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_019" type="button">
+        <img class="qr" src="./qrcodes/card_019.png" alt="card_019" />
+        <div class="meta">
+          <div class="label">#019 Image</div>
+          <div class="title">React Native: Flexbox</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_020" type="button">
+        <img class="qr" src="./qrcodes/card_020.png" alt="card_020" />
+        <div class="meta">
+          <div class="label">#020 Image</div>
+          <div class="title">Chemistry: Periodic Table</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_021" type="button">
+        <img class="qr" src="./qrcodes/card_021.png" alt="card_021" />
+        <div class="meta">
+          <div class="label">#021 Mixed</div>
+          <div class="title">Expo + Assets: Local Media</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_022" type="button">
+        <img class="qr" src="./qrcodes/card_022.png" alt="card_022" />
+        <div class="meta">
+          <div class="label">#022 Mixed</div>
+          <div class="title">Math: Fractions + Visual</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_023" type="button">
+        <img class="qr" src="./qrcodes/card_023.png" alt="card_023" />
+        <div class="meta">
+          <div class="label">#023 Mixed</div>
+          <div class="title">Science: Water Cycle</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_024" type="button">
+        <img class="qr" src="./qrcodes/card_024.png" alt="card_024" />
+        <div class="meta">
+          <div class="label">#024 Mixed</div>
+          <div class="title">History: Ancient Greece</div>
+        </div>
+      </button>
+    
+
+      <button class="card" data-id="card_025" type="button">
+        <img class="qr" src="./qrcodes/card_025.png" alt="card_025" />
+        <div class="meta">
+          <div class="label">#025 Mixed</div>
+          <div class="title">React: Hooks + Example</div>
+        </div>
+      </button>
+    
+      </div>
+    </div>
+
+    <div class="panel details">
+      <h2 id="detailsTitle">Select a card</h2>
+      <p class="hint">This preview works offline. Click a card to see both the full card object and the compact QR payload that is encoded in the QR image.</p>
+      <pre id="details"></pre>
+    </div>
+  </div>
+
+  <script>
+    const CARDS = [{"id":"card_001","type":"text","subject":"Programming","title":"JavaScript Basics: Variables","contentRef":"text_001","question":"Which keyword declares a block-scoped variable in JavaScript?","options":["var","let","define","constantly"],"correctAnswer":1},{"id":"card_002","type":"text","subject":"Math","title":"Algebra: Solving Linear Equations","contentRef":"text_002","question":"Solve: 3x + 6 = 18. What is x?","options":["2","3","4","6"],"correctAnswer":2},{"id":"card_003","type":"text","subject":"Science","title":"Physics: Newton's Second Law","contentRef":"text_003","question":"Newton's second law is commonly written as:","options":["E = mc^2","F = ma","a^2 + b^2 = c^2","V = IR"],"correctAnswer":1},{"id":"card_004","type":"text","subject":"History","title":"Ancient History: Roman Republic","contentRef":"text_004","question":"Which role was elected annually to lead the Roman Republic?","options":["Pharaoh","Consul","Shogun","Emperor"],"correctAnswer":1},{"id":"card_005","type":"text","subject":"Programming","title":"React: Components","contentRef":"text_005","question":"In React, components are primarily used to:","options":["Store database data","Build reusable UI pieces","Compile JavaScript","Manage DNS"],"correctAnswer":1},{"id":"card_006","type":"video","subject":"Programming","title":"Introduction to JavaScript","contentRef":"intro_js_006.mp4","question":"What is JavaScript primarily used for?","options":["Web development","Database management","Operating system design","CAD modeling"],"correctAnswer":0},{"id":"card_007","type":"video","subject":"Programming","title":"React State vs Props","contentRef":"react_state_props_007.mp4","question":"Props in React are best described as:","options":["Mutable internal component data","Read-only data passed into a component","A build tool","A type of CSS"],"correctAnswer":1},{"id":"card_008","type":"video","subject":"Programming","title":"Expo: Offline Assets","contentRef":"expo_offline_assets_008.mp4","question":"To ship images offline in an Expo app you should:","options":["Link to external URLs","Bundle assets with the app","Use only streaming","Disable caching"],"correctAnswer":1},{"id":"card_009","type":"video","subject":"Science","title":"Biology: Cells Overview","contentRef":"cells_overview_009.mp4","question":"Which structure contains genetic material in eukaryotic cells?","options":["Nucleus","Ribosome","Cell wall","Mitochondria"],"correctAnswer":0},{"id":"card_010","type":"video","subject":"History","title":"World History: Industrial Revolution","contentRef":"industrial_revolution_010.mp4","question":"The Industrial Revolution began in which country?","options":["France","Japan","United Kingdom","Brazil"],"correctAnswer":2},{"id":"card_011","type":"audio","subject":"Science","title":"Chemistry: States of Matter","contentRef":"states_of_matter_011.mp3","transcript":"Matter commonly exists as solid, liquid, gas, and plasma. Temperature and pressure affect state changes.","question":"Which state of matter has a fixed volume but no fixed shape?","options":["Solid","Liquid","Gas","Plasma"],"correctAnswer":1},{"id":"card_012","type":"audio","subject":"Math","title":"Geometry: Triangle Types","contentRef":"triangle_types_012.mp3","transcript":"Triangles can be classified by angles: acute, right, and obtuse; or by sides: equilateral, isosceles, scalene.","question":"A right triangle has:","options":["All sides equal","One 90° angle","Two obtuse angles","No angles"],"correctAnswer":1},{"id":"card_013","type":"audio","subject":"History","title":"Ancient Egypt: Pyramids","contentRef":"pyramids_013.mp3","transcript":"Many pyramids in Egypt were built as tombs for pharaohs and were part of larger mortuary complexes.","question":"Pyramids were primarily built to serve as:","options":["Markets","Tombs","Libraries","Fortresses"],"correctAnswer":1},{"id":"card_014","type":"audio","subject":"Programming","title":"JavaScript: Async/Await","contentRef":"async_await_014.mp3","transcript":"Async/await is syntax built on Promises that makes asynchronous code easier to read and write.","question":"`await` can be used inside which kind of function?","options":["Any function","Only arrow functions","An async function","A constructor"],"correctAnswer":2},{"id":"card_015","type":"audio","subject":"Science","title":"Astronomy: The Solar System","contentRef":"solar_system_015.mp3","transcript":"The solar system includes the Sun, eight planets, dwarf planets, moons, asteroids, and comets.","question":"Which is the largest planet in our solar system?","options":["Earth","Jupiter","Mars","Venus"],"correctAnswer":1},{"id":"card_016","type":"image","subject":"Math","title":"Graph: Slope Interpretation","contentRef":"slope_graph_016.png","question":"In the image, the line rises 4 units for every 2 units to the right. What is the slope?","options":["1/2","2","4","-2"],"correctAnswer":1},{"id":"card_017","type":"image","subject":"Science","title":"Anatomy: Human Heart","contentRef":"heart_diagram_017.png","question":"Based on the diagram, which chamber pumps oxygenated blood to the body?","options":["Right atrium","Right ventricle","Left atrium","Left ventricle"],"correctAnswer":3},{"id":"card_018","type":"image","subject":"History","title":"Timeline: World War II","contentRef":"ww2_timeline_018.png","question":"Which year marks the end of World War II in Europe?","options":["1939","1941","1945","1950"],"correctAnswer":2},{"id":"card_019","type":"image","subject":"Programming","title":"React Native: Flexbox","contentRef":"flexbox_layout_019.png","question":"In React Native, which property controls the main axis direction in Flexbox?","options":["alignItems","justifyContent","flexDirection","flexWrap"],"correctAnswer":2},{"id":"card_020","type":"image","subject":"Science","title":"Chemistry: Periodic Table","contentRef":"periodic_table_020.png","question":"Which element has the chemical symbol 'O'?","options":["Gold","Oxygen","Osmium","Zinc"],"correctAnswer":1},{"id":"card_021","type":"mixed","subject":"Programming","title":"Expo + Assets: Local Media","contentRef":"mixed_bundle_021.json","question":"Which approach best supports offline media in Expo?","options":["Always load from CDN","Bundle assets and reference locally","Disable asset caching","Use only live streams"],"correctAnswer":1,"contentRefs":{"video":"expo_local_media_021.mp4","image":"expo_assets_021.png"}},{"id":"card_022","type":"mixed","subject":"Math","title":"Math: Fractions + Visual","contentRef":"mixed_bundle_022.json","question":"If the visual shows 3 out of 4 equal parts shaded, the fraction is:","options":["1/4","2/4","3/4","4/3"],"correctAnswer":2,"contentRefs":{"image":"fractions_visual_022.png","audio":"fractions_explain_022.mp3"}},{"id":"card_023","type":"mixed","subject":"Science","title":"Science: Water Cycle","contentRef":"mixed_bundle_023.json","question":"Which process turns liquid water into vapor?","options":["Condensation","Evaporation","Precipitation","Collection"],"correctAnswer":1,"contentRefs":{"image":"water_cycle_023.png","audio":"water_cycle_023.mp3"}},{"id":"card_024","type":"mixed","subject":"History","title":"History: Ancient Greece","contentRef":"mixed_bundle_024.json","question":"Athens is most associated with which form of government in antiquity?","options":["Direct democracy","Absolute monarchy","Feudalism","Colonialism"],"correctAnswer":0,"contentRefs":{"image":"athens_024.png","audio":"athens_024.mp3"}},{"id":"card_025","type":"mixed","subject":"Programming","title":"React: Hooks + Example","contentRef":"mixed_bundle_025.json","question":"Which hook is used to manage state in a functional component?","options":["useFetch","useState","useRoute","useStyle"],"correctAnswer":1,"contentRefs":{"video":"react_hooks_025.mp4","image":"hooks_diagram_025.png"}}];
+
+    function typeLabel(type) {
+      return type.charAt(0).toUpperCase() + type.slice(1);
+    }
+
+    function makeQrPayload(card) {
+      return {
+        id: card.id,
+        t: card.type,
+        r: card.contentRef,
+        q: card.question,
+        o: card.options,
+        c: card.correctAnswer
+      };
+    }
+
+    const detailsEl = document.getElementById("details");
+    const detailsTitleEl = document.getElementById("detailsTitle");
+
+    function show(id) {
+      const card = CARDS.find(c => c.id === id);
+      if (!card) return;
+
+      const idx = CARDS.findIndex(c => c.id === id);
+      const n = String(idx + 1).padStart(3, "0");
+
+      const payload = makeQrPayload(card);
+      detailsTitleEl.textContent = "Card #" + n + " - " + typeLabel(card.type) + " - " + card.title;
+      detailsEl.textContent = JSON.stringify({ card, qrPayload: payload }, null, 2);
+    }
+
+    document.getElementById("grid").addEventListener("click", (e) => {
+      const btn = e.target.closest(".card");
+      if (!btn) return;
+      show(btn.dataset.id);
+    });
+
+    const searchEl = document.getElementById("search");
+    searchEl.addEventListener("input", () => {
+      const q = searchEl.value.trim().toLowerCase();
+      document.querySelectorAll(".card").forEach((el) => {
+        const id = el.dataset.id;
+        const card = CARDS.find(c => c.id === id);
+        const hay = (card.id + " " + card.title + " " + card.type + " " + card.subject).toLowerCase();
+        el.style.display = hay.includes(q) ? "flex" : "none";
+      });
+    });
+
+    show("card_001");
+  </script>
+</body>
+</html>
