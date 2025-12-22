@@ -73,7 +73,7 @@ export default function RootLayout() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded && Platform.OS !== 'web') {
+  if (!fontsLoaded) {
     return null;
   }
 
