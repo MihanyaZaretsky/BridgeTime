@@ -40,6 +40,8 @@ app-example
 
 /*.mp4
 
+/*.mp3
+
 # generated native folders
 /ios
 /android

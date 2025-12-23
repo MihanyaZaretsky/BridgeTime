@@ -233,13 +233,26 @@ export default function QuestionScreen() {
           )}
           
           {question.format === 'audio' && (
-            <View style={styles.mediaPlaceholder}>
-              <Text style={styles.mediaIcon}>🎵</Text>
-              <Text style={styles.mediaText}>Здесь будет воспроизводиться аудио</Text>
-              <Pressable style={styles.playButton}>
-                <Text style={styles.playButtonText}>▶ Воспроизвести</Text>
-              </Pressable>
-            </View>
+            Platform.OS === 'web' ? (
+              <View style={styles.mediaPlaceholder}>
+                <Text style={styles.mediaIcon}>🎵</Text>
+                <Text style={styles.mediaText}>Прослушайте фрагмент и выберите правильный ответ</Text>
+                <audio
+                  src={question.content}
+                  controls
+                  preload="none"
+                  style={{ width: '100%' }}
+                />
+              </View>
+            ) : (
+              <View style={styles.mediaPlaceholder}>
+                <Text style={styles.mediaIcon}>🎵</Text>
+                <Text style={styles.mediaText}>Аудио откроется во внешнем плеере</Text>
+                <Pressable style={styles.playButton} onPress={() => handleOpenMediaUrl(question.content)}>
+                  <Text style={styles.playButtonText}>Открыть аудио</Text>
+                </Pressable>
+              </View>
+            )
           )}
           
           {question.format === 'video' && (
