@@ -57,7 +57,6 @@ export default function GameScreen() {
   const currentPlayer = getCurrentPlayer();
   const isCurrentTurnPast = game.currentTurn === 'past';
   const era = isCurrentTurnPast ? EraTheme.past : EraTheme.present;
-  const scoreLimit = 5;
 
   const eraProgress = useSharedValue(isCurrentTurnPast ? 0 : 1);
   const cardScale = useSharedValue(1);
@@ -177,10 +176,6 @@ export default function GameScreen() {
                 Твой ход
               </Text>
             </View>
-
-            <View style={styles.scoreBlock}>
-              <ScoreIcons value={currentPlayer?.score ?? 0} max={scoreLimit} tint={era.accent} />
-            </View>
           </Animated.View>
 
           <View
@@ -207,28 +202,6 @@ export default function GameScreen() {
           <Text style={styles.scanButtonText}>Отсканировать QR-код</Text>
         </Pressable>
       </View>
-    </View>
-  );
-}
-
-function ScoreIcons({ value, max, tint }: { value: number; max: number; tint: string }) {
-  const safeValue = Math.max(0, Math.min(max, value));
-  return (
-    <View style={styles.scoreRow}>
-      {Array.from({ length: max }).map((_, i) => {
-        const filled = i < safeValue;
-        return (
-          <View
-            key={i}
-            style={[
-              styles.scoreCircle,
-              filled
-                ? { backgroundColor: tint, borderColor: tint }
-                : { backgroundColor: 'transparent', borderColor: 'rgba(23, 38, 42, 0.18)' },
-            ]}
-          />
-        );
-      })}
     </View>
   );
 }
@@ -309,23 +282,6 @@ const styles = StyleSheet.create({
   },
   playerTurnLabelCentered: {
     textAlign: 'center',
-  },
-  scoreBlock: {
-    marginTop: 'auto',
-    paddingTop: 18,
-    alignItems: 'center',
-  },
-  scoreRow: {
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scoreCircle: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    borderWidth: 2,
   },
   instructionCard: {
     marginTop: 14,

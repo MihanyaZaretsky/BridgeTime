@@ -35,7 +35,7 @@ export default function VictoryScreen() {
   const { game, resetGame } = useGame();
 
   const winner = game?.winner;
-  const winnerName = winner ? game.players[winner].name : 'Player';
+  const winnerName = winner ? game.players[winner].name : 'Игрок';
   const winnerColors = winner === 'past' ? PastColors : PresentColors;
   const winnerEmoji = winner === 'past' ? '📜' : '✨';
 
@@ -105,10 +105,6 @@ export default function VictoryScreen() {
     router.replace('/');
   };
 
-  const gameDuration = game?.startedAt && game?.finishedAt
-    ? Math.floor((game.finishedAt - game.startedAt) / 60000)
-    : 0;
-
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Celebration particles */}
@@ -143,48 +139,12 @@ export default function VictoryScreen() {
         <Text style={styles.victoryTitle}>Мост построен!</Text>
         
         <Text style={[styles.winnerName, { color: winnerColors.primary }]}>
-          {winnerName} Wins!
+          {winnerName} победил!
         </Text>
         
         <Text style={styles.victoryMessage}>
-          The bridge across time has been built. Two generations are now connected through shared memories and understanding.
+          Мост через время построен. Два поколения теперь соединены общими воспоминаниями и пониманием.
         </Text>
-      </Animated.View>
-
-      {/* Game stats */}
-      <Animated.View
-        entering={FadeInUp.delay(1000).duration(600)}
-        style={styles.statsContainer}
-      >
-        <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {game?.players.past.score || 0}
-          </Text>
-          <Text style={styles.statLabel}>
-            {game?.players.past.name}'s Answers
-          </Text>
-        </View>
-        
-        <View style={styles.statDivider} />
-        
-        <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {game?.players.present.score || 0}
-          </Text>
-          <Text style={styles.statLabel}>
-            {game?.players.present.name}'s Answers
-          </Text>
-        </View>
-        
-        {gameDuration > 0 && (
-          <>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{gameDuration}</Text>
-              <Text style={styles.statLabel}>Минут в игре</Text>
-            </View>
-          </>
-        )}
       </Animated.View>
 
       {/* Heartfelt message */}
@@ -194,7 +154,7 @@ export default function VictoryScreen() {
       >
         <Text style={styles.heartfeltEmoji}>💕</Text>
         <Text style={styles.heartfeltText}>
-          Thank you for taking this journey together. The real treasure is the memories you've shared.
+          Спасибо за это путешествие. Главное сокровище — воспоминания, которые вы разделили.
         </Text>
       </Animated.View>
 

@@ -193,7 +193,7 @@ export default function QuestionScreen() {
             {questionTimePeriod === 'past' ? '📜 Из прошлого' : '✨ Из настоящего'}
           </Text>
           <Text style={[styles.categoryLabel, { color: questionColors.text }]}>
-            {question.metadata?.category || 'General'}
+            {question.metadata?.category || 'Общее'}
           </Text>
         </View>
       </Animated.View>
@@ -237,7 +237,7 @@ export default function QuestionScreen() {
               <Text style={styles.mediaIcon}>🎵</Text>
               <Text style={styles.mediaText}>Здесь будет воспроизводиться аудио</Text>
               <Pressable style={styles.playButton}>
-                <Text style={styles.playButtonText}>▶ Play</Text>
+                <Text style={styles.playButtonText}>▶ Воспроизвести</Text>
               </Pressable>
             </View>
           )}
@@ -316,12 +316,14 @@ export default function QuestionScreen() {
           <Animated.View style={[styles.resultCard, resultStyle]}>
             <Text style={styles.resultEmoji}>{isCorrect ? '🎉' : '💭'}</Text>
             <Text style={[styles.resultTitle, { color: isCorrect ? SharedColors.success : PastColors.primary }]}>
-              {isCorrect ? 'Correct!' : 'Not quite...'}
+              {isCorrect ? 'Правильно!' : 'Не совсем...'}
             </Text>
             <Text style={styles.resultMessage}>
               {isCorrect
-                ? 'You earned a bridge segment! Place it on your side of the board.'
-                : `The turn passes to ${game?.currentTurn === 'past' ? game.players.present.name : game?.players.past.name}.`}
+                ? 'Вы получаете сегмент моста. Поставьте его на своей стороне.'
+                : game
+                  ? `Ход переходит к ${game.currentTurn === 'past' ? game.players.present.name : game.players.past.name}.`
+                  : 'Ход переходит к другому игроку.'}
             </Text>
           </Animated.View>
         )}
@@ -359,7 +361,7 @@ export default function QuestionScreen() {
             disabled={!selectedAnswer || !isTimePeriodAllowed}
           >
             <Text style={styles.submitButtonText}>
-              {selectedAnswer ? 'Submit Answer' : 'Select an answer'}
+              {selectedAnswer ? 'Ответить' : 'Выберите вариант ответа'}
             </Text>
           </Pressable>
         ) : (
@@ -371,7 +373,7 @@ export default function QuestionScreen() {
             onPress={handleContinue}
           >
             <Text style={styles.continueButtonText}>
-              {isCorrect ? 'Place Bridge Segment →' : 'Pass Turn →'}
+              {isCorrect ? 'Поставить сегмент моста →' : 'Передать ход →'}
             </Text>
           </Pressable>
         )}
