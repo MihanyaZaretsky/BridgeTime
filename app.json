@@ -44,6 +44,9 @@
         }
       ]
     ],
+    "extra": {
+      "mediaBaseUrl": "https://mihanyazaretsky-bridgetime-dc55.twc1.net"
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
