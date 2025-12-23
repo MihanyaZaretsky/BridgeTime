@@ -129,11 +129,6 @@ export default function ScannerScreen() {
 
       setScanError(null);
 
-      if (!game) {
-        setScanError('Нет активной игры. Вернитесь на главный экран и начните игру заново.');
-        return;
-      }
-
       const questionId = parseQuestionId(raw);
       if (!questionId) {
         console.warn('Unsupported QR payload (expected number / questionId / JSON):', raw);
@@ -147,17 +142,29 @@ export default function ScannerScreen() {
         return;
       }
 
-      const expectedPeriod: TimePeriod = game.currentTurn;
-      if (scannedPeriod !== expectedPeriod) {
-        setScanError(
-          `Сейчас ход игрока из ${expectedPeriod === 'past' ? 'Прошлого' : 'Настоящего'}. ` +
-            `Нельзя сканировать карту из ${scannedPeriod === 'past' ? 'Прошлого' : 'Настоящего'}.`
-        );
-        return;
+      if (game) {
+        const expectedPeriod: TimePeriod = game.currentTurn;
+        if (scannedPeriod !== expectedPeriod) {
+          setScanError(
+            `Сейчас ход игрока из ${expectedPeriod === 'past' ? 'Прошлого' : 'Настоящего'}. ` +
+              `Нельзя сканировать карту из ${scannedPeriod === 'past' ? 'Прошлого' : 'Настоящего'}.`
+          );
+          return;
+        }
       }
 
       lastScanAtRef.current = now;
       setIsProcessing(true);
+
+      if (Platform.OS === 'web') {
+        try {
+          webScannerControlsRef.current?.stop?.();
+        } catch {
+          // ignore
+        }
+        webScannerControlsRef.current = null;
+        setIsWebScanning(false);
+      }
 
       router.replace({
         pathname: '/question',

@@ -7,15 +7,15 @@ const videosDir = path.join(distDir, 'videos');
 
 const sources = [
   {
-    from: path.join(projectRoot, 'Белое солнце пустыни 1970 фрагмент [get.gt].mp4'),
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-001.mp4'),
     to: path.join(videosDir, 'qr-001.mp4'),
   },
   {
-    from: path.join(projectRoot, 'Поехали Геша Отрывок из фильма Бриллиантовая рука 1968 [get.gt].mp4'),
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-002.mp4'),
     to: path.join(videosDir, 'qr-002.mp4'),
   },
   {
-    from: path.join(projectRoot, 'Иван Васильевич меняет профессию фрагмент 2 [get.gt].mp4'),
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-003.mp4'),
     to: path.join(videosDir, 'qr-003.mp4'),
   },
 ];

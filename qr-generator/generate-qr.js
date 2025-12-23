@@ -34,6 +34,12 @@ function makeQrPayload(card) {
     return qid ? `bridgetime://question?questionId=${qid}` : card.id;
   }
 
+  if (QR_PAYLOAD_MODE === "web_url") {
+    const qid = questionIdFromCardId(card.id);
+    const base = (process.env.WEB_BASE_URL ?? "https://mihanyazaretsky-bridgetime-dc55.twc1.net").replace(/\/$/, "");
+    return qid ? `${base}/question?questionId=${qid}` : card.id;
+  }
+
   if (QR_PAYLOAD_MODE === "bridgetime_number") {
     const qid = questionIdFromCardId(card.id);
     return qid ?? card.id;
