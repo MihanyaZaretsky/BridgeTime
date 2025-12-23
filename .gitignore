@@ -5,7 +5,6 @@ node_modules/
 
 # Expo
 .expo/
-dist/
 web-build/
 expo-env.d.ts
 
@@ -37,6 +36,8 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+/*.mp4
 
 # generated native folders
 /ios

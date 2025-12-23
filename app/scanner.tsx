@@ -12,13 +12,13 @@ import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'ex
 import { router } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    Dimensions,
-    Platform,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Dimensions,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -196,28 +196,81 @@ export default function ScannerScreen() {
 
     (async () => {
       try {
-        if (!webReaderRef.current) {
-          const mod: any = await import('@zxing/browser');
-          const ReaderCtor = mod?.BrowserQRCodeReader;
-          if (!ReaderCtor) {
-            throw new Error('QR library not available');
-          }
-          webReaderRef.current = new ReaderCtor();
+        const BarcodeDetectorCtor = (globalThis as any)?.BarcodeDetector;
+        if (!BarcodeDetectorCtor) {
+          throw new Error('BarcodeDetector API not supported');
         }
 
-        if (cancelled) return;
+        if (!webReaderRef.current) {
+          webReaderRef.current = new BarcodeDetectorCtor({ formats: ['qr_code'] });
+        }
 
-        const controls = webReaderRef.current.decodeFromVideoDevice(
-          undefined,
-          videoEl,
-          (result: any) => {
-            const text = result?.getText?.();
-            if (text) {
-              handleOpenQuestion(String(text));
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' } },
+          audio: false,
+        });
+
+        if (cancelled) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        videoEl.srcObject = stream;
+        await videoEl.play();
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          stream.getTracks().forEach((t) => t.stop());
+          throw new Error('Canvas not available');
+        }
+
+        let rafId: number | null = null;
+        let lastDetectAt = 0;
+
+        const loop = () => {
+          if (cancelled) return;
+          rafId = requestAnimationFrame(loop);
+
+          const now = Date.now();
+          if (now - lastDetectAt < 300) return;
+          lastDetectAt = now;
+
+          const vw = videoEl.videoWidth;
+          const vh = videoEl.videoHeight;
+          if (!vw || !vh) return;
+
+          canvas.width = vw;
+          canvas.height = vh;
+          ctx.drawImage(videoEl, 0, 0, vw, vh);
+
+          webReaderRef.current
+            .detect(canvas)
+            .then((codes: any[]) => {
+              const raw = codes?.[0]?.rawValue;
+              if (raw) {
+                handleOpenQuestion(String(raw));
+              }
+            })
+            .catch(() => {
+              return;
+            });
+        };
+
+        loop();
+
+        webScannerControlsRef.current = {
+          stop: () => {
+            if (rafId != null) cancelAnimationFrame(rafId);
+            try {
+              const s = videoEl.srcObject as MediaStream | null;
+              s?.getTracks?.().forEach((t) => t.stop());
+            } catch {
+              // ignore
             }
-          }
-        );
-        webScannerControlsRef.current = controls as unknown as { stop: () => void };
+            videoEl.srcObject = null;
+          },
+        };
       } catch (e) {
         const msg = e instanceof Error ? e.message : String(e);
         setScanError(

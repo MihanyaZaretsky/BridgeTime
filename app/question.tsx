@@ -8,10 +8,13 @@ import { PastColors, PresentColors, SharedColors } from '@/constants/theme';
 import { useGame } from '@/context/GameContext';
 import { getQuestionById, inferTimePeriodFromQuestionId } from '@/data/questionBank';
 import { AnswerOption, Question, TimePeriod } from '@/types/game';
+import Constants from 'expo-constants';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import {
     Dimensions,
+    Linking,
+    Platform,
     Pressable,
     ScrollView,
     StyleSheet,
@@ -111,6 +114,29 @@ export default function QuestionScreen() {
         withSpring(-5, { damping: 2, stiffness: 500 }),
         withSpring(0, { damping: 10, stiffness: 500 })
       );
+    }
+  };
+
+  const handleOpenMediaUrl = async (url: string) => {
+    const trimmed = (url ?? '').trim();
+    if (!trimmed) return;
+
+    const resolved = (() => {
+      if (/^https?:\/\//i.test(trimmed)) return trimmed;
+      const extra = (Constants.expoConfig?.extra ?? {}) as Record<string, unknown>;
+      const base = typeof extra.mediaBaseUrl === 'string' ? extra.mediaBaseUrl.trim() : '';
+      const normalizedBase = base.replace(/\/$/, '');
+      if (!normalizedBase) return trimmed;
+      if (!trimmed.startsWith('/')) return `${normalizedBase}/${trimmed}`;
+      return `${normalizedBase}${trimmed}`;
+    })();
+
+    try {
+      const canOpen = await Linking.canOpenURL(resolved);
+      if (!canOpen) return;
+      await Linking.openURL(resolved);
+    } catch {
+      return;
     }
   };
 
@@ -217,13 +243,24 @@ export default function QuestionScreen() {
           )}
           
           {question.format === 'video' && (
-            <View style={styles.mediaPlaceholder}>
-              <Text style={styles.mediaIcon}>🎬</Text>
-              <Text style={styles.mediaText}>Здесь будет воспроизводиться видео</Text>
-              <Pressable style={styles.playButton}>
-                <Text style={styles.playButtonText}>▶ Play</Text>
-              </Pressable>
-            </View>
+            Platform.OS === 'web' ? (
+              <View style={styles.videoWrap}>
+                <video
+                  src={question.content}
+                  controls
+                  playsInline
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </View>
+            ) : (
+              <View style={styles.mediaPlaceholder}>
+                <Text style={styles.mediaIcon}>🎬</Text>
+                <Text style={styles.mediaText}>Видео откроется во внешнем плеере</Text>
+                <Pressable style={styles.playButton} onPress={() => handleOpenMediaUrl(question.content)}>
+                  <Text style={styles.playButtonText}>Открыть видео</Text>
+                </Pressable>
+              </View>
+            )
           )}
 
           {question.hint && (
@@ -422,6 +459,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 32,
     alignItems: 'center',
+  },
+  videoWrap: {
+    backgroundColor: '#000',
+    borderRadius: 16,
+    overflow: 'hidden',
+    width: '100%',
+    height: Math.round(SCREEN_WIDTH * 0.56),
   },
   mediaIcon: {
     fontSize: 48,
