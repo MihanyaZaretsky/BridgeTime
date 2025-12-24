@@ -18,6 +18,18 @@ const sources = [
     from: path.join(projectRoot, 'assets', 'videos', 'qr-003.mp4'),
     to: path.join(videosDir, 'qr-003.mp4'),
   },
+  {
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-013.mp4'),
+    to: path.join(videosDir, 'qr-013.mp4'),
+  },
+  {
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-014.mp4'),
+    to: path.join(videosDir, 'qr-014.mp4'),
+  },
+  {
+    from: path.join(projectRoot, 'assets', 'videos', 'qr-015.mp4'),
+    to: path.join(videosDir, 'qr-015.mp4'),
+  },
 ];
 
 if (!fs.existsSync(distDir)) {
