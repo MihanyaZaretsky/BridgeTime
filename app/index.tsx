@@ -7,19 +7,19 @@ import { SharedColors } from '@/constants/theme';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import Animated, {
-  Easing,
-  cancelAnimation,
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming
+    Easing,
+    cancelAnimation,
+    runOnJS,
+    useAnimatedStyle,
+    useSharedValue,
+    withRepeat,
+    withTiming
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -137,7 +137,7 @@ export default function WelcomeScreen() {
           <Animated.View style={[styles.rulesPip, rulesPipStyle, { marginTop: 14 }]}>
             <Text style={styles.rulesTitle}>Как играть</Text>
             <Text style={styles.rulesText}>
-              1 Возьмите карту из противоположной эпохи{`\n`}
+              1 Возьмите карту из другой эпохи{`\n`}
               2 Отсканируйте QR-код на карте{`\n`}
               3 Ответьте на вопрос, чтобы получить сегмент моста{`\n`}
               4 Первый, кто дойдёт до противоположного берега — побеждает!

@@ -95,7 +95,7 @@ export default function SetupScreen() {
           />
 
           {pastFocused && (
-            <Text style={styles.hintText}>Обычно старший игрок</Text>
+            <Text style={styles.hintText}>Обычно младший игрок</Text>
           )}
         </Animated.View>
 
@@ -138,7 +138,7 @@ export default function SetupScreen() {
           />
 
           {presentFocused && (
-            <Text style={styles.hintText}>Обычно младший игрок</Text>
+            <Text style={styles.hintText}>Обычно старший игрок</Text>
           )}
         </Animated.View>
 

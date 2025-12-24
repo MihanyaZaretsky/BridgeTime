@@ -12,13 +12,13 @@ import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'ex
 import { router } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Dimensions,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
+    Dimensions,
+    Platform,
+    Pressable,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
 } from 'react-native';
 import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -403,11 +403,11 @@ export default function ScannerScreen() {
 
       {/* Instructions */}
       <Animated.View
-        entering={FadeInUp.delay(300)}
+        entering={FadeInUp.delay(200).duration(500)}
         style={[styles.instructionsCard, { backgroundColor: currentColors.background }]}
       >
         <Text style={[styles.instructionTitle, { color: currentColors.text }]}>
-          Возьмите карту из {timePeriodLabel} эпохи
+          Возьмите карту из {timePeriodLabel}
         </Text>
         <Text style={[styles.instructionText, { color: currentColors.textLight }]}>
           Наведите камеру на QR-код на карте. Вопрос откроется автоматически.
