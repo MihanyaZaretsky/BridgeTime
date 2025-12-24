@@ -8,6 +8,9 @@ const targets = [
   { contains: 'Valerij_Meladze_-_Vera', out: 'qr-004.mp3' },
   { contains: 'nu_pogodi_14-02', out: 'qr-005.mp3' },
   { contains: 'Billie Jean', out: 'qr-006.mp3' },
+  { contains: 'Егор Крид - Будильник', out: 'qr-016.mp3' },
+  { contains: 'Justin Bieber - Baby', out: 'qr-017.mp3' },
+  { contains: 'basta_-_vypusknoy-medlyachok', out: 'qr-018.mp3' },
 ];
 
 function listMp3Candidates(dir) {

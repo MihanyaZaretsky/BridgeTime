@@ -18,6 +18,18 @@ const sources = [
     from: path.join(projectRoot, 'assets', 'audio', 'qr-006.mp3'),
     to: path.join(audioDir, 'qr-006.mp3'),
   },
+  {
+    from: path.join(projectRoot, 'assets', 'audio', 'qr-016.mp3'),
+    to: path.join(audioDir, 'qr-016.mp3'),
+  },
+  {
+    from: path.join(projectRoot, 'assets', 'audio', 'qr-017.mp3'),
+    to: path.join(audioDir, 'qr-017.mp3'),
+  },
+  {
+    from: path.join(projectRoot, 'assets', 'audio', 'qr-018.mp3'),
+    to: path.join(audioDir, 'qr-018.mp3'),
+  },
 ];
 
 if (!fs.existsSync(distDir)) {
